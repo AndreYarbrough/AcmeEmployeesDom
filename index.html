@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <style>
+            .employeeFav{
+                display: flex;
+                flex-direction: row;
+                background-color: blue;
+                color: white;
+                
+                }
+                .employee{
+                display: flex;
+                flex-direction: row;
+                }
+              div > div{
+                  display: flex;
+                  padding: 1rem;
+                margin: 1rem 0;  
+              }  
+                
+        </style>
+    </head>
+    <body>
+        <div id=list></div>
+        <script>
+    const employees = [
+    { id: 1, name: 'moe'},
+    { id: 2, name: 'larry'},
+    { id: 4, name: 'shep'},
+    { id: 3, name: 'curly'},
+    { id: 5, name: 'groucho'},
+    { id: 6, name: 'harpo'},
+    { id: 8, name: 'shep Jr.'},
+    { id: 99, name: 'lucy'}
+  ];
+    const toggleFavorite = (employees, id) =>{
+    const employee = employees.find(employee => employee.id === id);
+    const favorites = employees.filter(employee =>employee.isFavorite);
+    const status=document.querySelector('#status');
+    const list = document.querySelector('#list');
+    employee.isFavorite = !employee.isFavorite;
+    list.addEventListener('click',(ev)=>{
+        const id = ev.target.getAttribute('data-id');
+        if(favorites.length === 3 && !employee.isFavorite){
+        alert('You already have 3 favorites')
+    }else{employee.isFavorite = !employee.isFavorite;}
+        render()
+    })
+    //console.log(`favorite emoloyees are: ${favorites}`);
+};  
+  toggleFavorite(employees, 1);
+  toggleFavorite(employees, 2);
+  toggleFavorite(employees, 4);
+
+   console.log(employees);
+   const render = () =>{
+         const stats = employees.filter(employee => {return (employee.isFavorite)});
+         status.innerHTML=`<h3><font color="white">${stats.length} VIPS</font></h3>`;
+         const html = employees.map(employee =>{return`<div class="employee${employee.isFavorite ? 'Fav':''}"><div><h3>${employee.name}</h3>${employee.isFavorite ? '<button data-id=${employee.isFavorite}>Undo Favorite</button>':'<button data-id=${employee.isFavorite}>Make Favorite</button>'}</div></div>`}).join('');
+        list.innerHTML=html;
+     };
+    render();
+        </script>
+    </body>
+</html>
